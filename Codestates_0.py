@@ -69,4 +69,4 @@ df = pd.DataFrame({
 
 # SSE 와 데이터 프레임을 화면에 출력하기 위한 함수를 사용합니다.
 st.dataframe(data=df, use_container_width=True)
-st.caption(f"ML Model 의 성능 : {sse_list}")
+st.caption(f"ML Model 의 성능 : {sse_value}")

@@ -58,7 +58,7 @@ b = st.number_input(label = '임의의 절편을 입력하여 주세요.(b)',
 
 # 앞서 정의한 ml model() 과 sse() 를 실행시켜 결괏값을 변수로 정의합니다. 
 y_pred_list = ml_model(x_real_list = x_real_list)
-sse_list = sse(y_real_list = y_real_list, y_pred_list = y_pred_list)
+sse_value = sse(y_real_list = y_real_list, y_pred_list = y_pred_list)
 
 # Pandas 를 활용하여 데이터 프레임을 생성합니다. 
 df = pd.DataFrame({

@@ -3,7 +3,7 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-
+plt.use("Agg")
 # 리스트 타입의 데이터 
 x_real_list = [580, 700, 810, 840] # 공공장소 이용량 데이터
 y_real_list = [374, 385, 375, 401] # 일일 확진자 수 데이터

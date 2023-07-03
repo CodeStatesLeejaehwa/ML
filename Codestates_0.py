@@ -2,15 +2,15 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
+import matplotlib.pyplot as plt
 
 # 리스트 타입의 데이터 
 x_real_list = [580, 700, 810, 840] # 공공장소 이용량 데이터
 y_real_list = [374, 385, 375, 401] # 일일 확진자 수 데이터
-y_pred_list = []                   # 예측한 결괏값을 담을 수 있는 빈 리스트 
-
 
 # 일일 확진자 수를 예측하는 함수 제작(ml_model)
 # 공공장소 이용량(x_real_list)을 전달받습니다. 
+y_pred_list = []                   # 예측한 결괏값을 담을 수 있는 빈 리스트 
 def ml_model(x_real_list):
     
     # 반복문을 활용하여 공공장소 이용량의 값을 하나씩 호출하여 1차 함수 수식에 적용합니다. 
@@ -25,10 +25,9 @@ def ml_model(x_real_list):
     return y_pred_list
 
 
-square_list = []                   # 제곱의 결과를 담을 수 있는 빈 리스트
-
 # Sum of Square Error를 연산하는 함수 제작(sse)
 # 실제 정답(y_real_list), 예측 결과(y_pred_list)를 전달받습니다. 
+square_list = []                   # 제곱의 결과를 담을 수 있는 빈 리스트
 def sse(y_real_list, y_pred_list):
     
     for i in range(len(y_real_list)):
@@ -46,7 +45,20 @@ def sse(y_real_list, y_pred_list):
 
     return sse
 
-# Streamlit 
+def matplot_draw(x_real_list, y_real_list, y_pred_list):
+    fig, ax = plt.subplots()
+    plt.scatter(x_real_list, y_real_list, color='red', label='X,Y Dataset')
+    plt.plot(x_real_list, y_pred_list, color='blue', label='Predict')
+    plt.xlabel('x')
+    plt.ylabel('y')
+    plt.title('Covid-19 Predict')
+    plt.legend()
+    plt.grid()
+    plt.show()
+
+    return fig
+
+# Streamlit App Title
 st.title("Covid-19 일일 확진자 수 예측 ML Model")
 st.caption("ML Model 구현에 필요한 값을 입력해주세요.")
 
@@ -67,6 +79,14 @@ df = pd.DataFrame({
     '머신러닝 모델의 예측(y_pred_list)' : y_pred_list,
 })
 
+
+
 # SSE 와 데이터 프레임을 화면에 출력하기 위한 함수를 사용합니다.
 st.dataframe(data=df, use_container_width=True)
 st.caption(f"ML Model 의 성능 : {sse_value}")
+
+# 산점도와 회귀선 그리기
+fig = matplot_draw(x_real_list, y_real_list, y_pred_list)
+
+# 그래프를 streamlit에 표시합니다.
+st.pyplot(fig)
